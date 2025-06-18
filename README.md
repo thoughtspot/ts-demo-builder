@@ -1,46 +1,43 @@
-# Getting Started with Create React App
+# TSE Demo Builder
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+The TSE Demo Builder allows you to easily create demos for customers using either sample content or pre-built content.  
 
-## Available Scripts
+## Running from Vercel
 
-In the project directory, you can run:
+TODO - add details.
 
-### `npm start`
+## Installing locally
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+To install locally you can either install using the Git command line (recommended) or downloading the files.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+### Download files
 
-### `npm test`
+#### Download with GIT
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+To install using `git` open Terminal or PowerShell and navigate to a folder where you want to install the demo builder.  Note that the demo builder will be installed into a child folder.
 
-### `npm run build`
+Now run the following command: `git clone https://github.com/thoughtspot/ts-demo-builder.git`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+You should see files download and then get a success message.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+#### Download via ZIP file
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Alternatively you can just download using the code button and selecting `Download ZIP`.  This will download a zip file.  Put the file into the folder where you want it and double click to extract the files.
 
-### `npm run eject`
+### Installing dependencies
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+You should now have folder named either ts-demo-builder or ts-demo-builder-main.  `cd` into the folder.  
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Run the following command: `npm install`
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+You should see dependencies getting installed.  You may see warning about dependencies or deprecations, but you can ignore those (usually).
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+### Create a .env file
 
-## Learn More
+To demo Sage, you need to create a .env file in the root directory and add the following:
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+`REACT_APP_GPT_API_KEY=<your key>`, where `<your key>` is a valid OpenAI key.  
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### Starting the demo code
+
+To start the server, from the root folder run `npm start`.  You will see messages, but then you should see a browser open to `http://localhost:3000`.
