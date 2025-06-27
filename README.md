@@ -4,10 +4,12 @@ The TSE Demo Builder allows you to easily create demos for customers using eithe
 
 ## Running from Vercel
 
-TODO - add details.
+The easiest way to use [TSE Demo Builder](https://ts-demo-builder-six.vercel.app) is to use the hosted version.  Then use the settings to pick either a pre-defined configuration or add your own.
 
-## Installing locally
+## Installing and running locally
 
+<details>
+<summary>Installation Steps</summary>
 To install locally you can either install using the Git command line (recommended) or downloading the files.
 
 ### Download files
@@ -41,3 +43,4 @@ To demo Sage, you need to create a .env file in the root directory and add the f
 ### Starting the demo code
 
 To start the server, from the root folder run `npm start`.  You will see messages, but then you should see a browser open to `http://localhost:3000`.
+</details>
