@@ -1,14 +1,13 @@
-import { Card, Avatar } from "antd";
 import React from "react";
 import ReactMarkdown from "react-markdown";
-import {Message} from '../Store'
+import { Message } from "../Store";
 
 export interface MessageViewProps {
-  message: Message
+  message: Message;
 }
 
-export const MessageView:React.FC<MessageViewProps> = ({message}) => {
-  const color = message.sender == "user" ? "#efefef" : "#fff";
+export const MessageView: React.FC<MessageViewProps> = ({ message }) => {
+  const color = message.sender === "user" ? "#efefef" : "#fff";
   const messageBodyRef = React.useRef<HTMLDivElement>(null);
   const [streamText, setStreamText] = React.useState("");
 
@@ -16,16 +15,18 @@ export const MessageView:React.FC<MessageViewProps> = ({message}) => {
     console.log(message);
     if (message.dom) {
       message.dom.style.height = "600px";
-      if (messageBodyRef.current) messageBodyRef.current.appendChild(message.dom);
+      if (messageBodyRef.current)
+        messageBodyRef.current.appendChild(message.dom);
     } else if (message.stream) {
       let text = "";
       message.stream.on("content", (delta: string) => {
         text = text + delta;
-        if (messageBodyRef.current) messageBodyRef.current.scrollIntoView(false);
+        if (messageBodyRef.current)
+          messageBodyRef.current.scrollIntoView(false);
         setStreamText(text);
       });
     }
-  }, []);
+  }, [message]);
 
   return (
     <div
@@ -48,7 +49,7 @@ const MessageMarkdown = ({ children, ...props }: any) => {
     <ReactMarkdown
       components={{
         Link: (props: any) => (
-          <a href={props.href} target="_blank">
+          <a href={props.href} target="_blank" rel="noreferrer">
             {props.children}
           </a>
         ),

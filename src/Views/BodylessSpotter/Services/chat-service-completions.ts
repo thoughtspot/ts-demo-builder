@@ -1,26 +1,25 @@
-import { BodylessConversation, getSampleData } from "./TS";
+import { BodylessConversation } from "./TS";
 import { getDefaultInsuranceAssistantPrompt } from "./Prompt";
-import { openai, getGPTResponse } from "./LLM";
-import { Message, Worksheet } from "../Store";
+import { getGPTResponse } from "./LLM";
 
 export class Thread {
   public isReady: Promise<void>;
   public conversation: any;
   public messages: any[] = [];
   constructor(worksheetId: string, TSURL: string) {
-    console.log("initting",worksheetId,TSURL)
+    console.log("initting", worksheetId, TSURL);
 
     this.isReady = this.init(worksheetId, TSURL);
-    console.log("inited")
+    console.log("inited");
   }
 
   async init(worksheetId: string, TSURL: string) {
-    console.log("getting BodylessConversation")
+    console.log("getting BodylessConversation");
 
     this.conversation = new BodylessConversation({
-      worksheetId: worksheetId
+      worksheetId: worksheetId,
     });
-    console.log("getting initial prompt")
+    console.log("getting initial prompt");
     const initialPrompt = await getDefaultInsuranceAssistantPrompt(
       worksheetId,
       TSURL
@@ -31,7 +30,7 @@ export class Thread {
         content: initialPrompt,
       },
     ];
-    console.log("initialPrompt",initialPrompt)
+    console.log("initialPrompt", initialPrompt);
   }
 
   async getSystemResponse(userMessage: string, addMessageCb: any) {
