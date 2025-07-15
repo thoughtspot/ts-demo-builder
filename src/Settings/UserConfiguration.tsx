@@ -19,7 +19,7 @@ export const DefaultUserRoles: UserRole[] = [
       Action.Pin,
       Action.DrillDown,
       Action.SpotIQAnalyze,
-      Action.SageAnswerFeedback,
+      Action.SpotterFeedback,
     ],
     hiddenActions: undefined,
   },

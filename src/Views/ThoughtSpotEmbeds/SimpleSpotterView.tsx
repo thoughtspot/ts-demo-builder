@@ -1,28 +1,25 @@
-import {
-  ConversationEmbed,
-  EmbedEvent,
-  RuntimeFilterOp,
-} from "@thoughtspot/visual-embed-sdk";
+import { SpotterEmbed, EmbedEvent } from "@thoughtspot/visual-embed-sdk";
 
 import { useContext, useEffect, useRef } from "react";
 import { SettingsContext } from "../../App";
-import { SimpleSage } from "../../Settings/StandardMenus/SimpleSageConfig";
+import { SimpleSpotter } from "../../Settings/StandardMenus/SimpleSpotterConfig";
 
-interface SimpleSageProps {
-  simpleSage: SimpleSage;
+interface SimpleSpotterProps {
+  simpleSpotter: SimpleSpotter;
 }
-const SimpleSageView: React.FC<SimpleSageProps> = ({ simpleSage }) => {
+const SimpleSpotterView: React.FC<SimpleSpotterProps> = ({ simpleSpotter }) => {
   const settings = useContext(SettingsContext).settings;
   const embedRef = useRef<any>(null);
   useEffect(() => {
-    let div = document.getElementById("conversation");
+    let div = document.getElementById("spotter");
     if (div) {
-      embedRef.current = new ConversationEmbed(div, {
-        worksheetId: simpleSage.worksheet,
+      embedRef.current = new SpotterEmbed(div, {
+        worksheetId: simpleSpotter.worksheet,
         frameParams: {
           width: "100%",
           height: "100%",
         },
+        /*
         runtimeFilters: [
           {
             columnName: "Store Region",
@@ -30,6 +27,7 @@ const SimpleSageView: React.FC<SimpleSageProps> = ({ simpleSage }) => {
             values: ["east"],
           },
         ],
+        */
         customizations: {
           iconSpriteUrl:
             "https://cdn.jsdelivr.net/gh/hannsta/ts-demo-builder@main/public/sparkleicon.svg",
@@ -56,15 +54,15 @@ const SimpleSageView: React.FC<SimpleSageProps> = ({ simpleSage }) => {
         console.log(data);
       });
     }
-  }, [simpleSage.worksheet, settings.otherSettings?.spotterName]);
+  }, [simpleSpotter.worksheet, settings.otherSettings?.spotterName]);
   return (
     <>
-      {simpleSage.worksheet ? (
-        <div className="h-full" id="conversation"></div>
+      {simpleSpotter.worksheet ? (
+        <div className="h-full" id="spotter"></div>
       ) : (
         <div>Please select a worksheet in the Settings menu</div>
       )}
     </>
   );
 };
-export default SimpleSageView;
+export default SimpleSpotterView;

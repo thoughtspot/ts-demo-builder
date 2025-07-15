@@ -207,15 +207,15 @@ const LeftNav: React.FC<LeftNavProps> = ({
                   )}
                 </div>
               )}
-            {/* Simple Sage */}
-            {settings.simpleSage &&
-              settings.simpleSage.enabled &&
+            {/* Simple Spotter */}
+            {settings.simpleSpotter &&
+              settings.simpleSpotter.enabled &&
               user.selfService && (
                 <div
                   className="flex flex-row items-center p-1 hover:cursor-pointer rounded-md hover:font-bold"
                   onClick={() => {
                     setWideMode(false);
-                    setSelectedPage({ type: PageType.SIMPLESAGE });
+                    setSelectedPage({ type: PageType.SIMPLESPOTTER });
                     setThoughtSpotObject(null);
                   }}
                 >
@@ -231,7 +231,7 @@ const LeftNav: React.FC<LeftNavProps> = ({
                       className="ml-3 text-lg"
                       style={{ color: settings.style.iconColor }}
                     >
-                      {settings.simpleSage.name}
+                      {settings.simpleSpotter.name}
                     </div>
                   )}
                 </div>
