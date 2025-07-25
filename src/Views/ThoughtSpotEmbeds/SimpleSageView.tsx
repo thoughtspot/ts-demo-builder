@@ -23,6 +23,7 @@ const SimpleSageView: React.FC<SimpleSageProps> = ({ simpleSage }) => {
           width: "100%",
           height: "100%",
         },
+        //@ts-ignore
         runtimeFilters: [
           {
             columnName: "Store Region",
