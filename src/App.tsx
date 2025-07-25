@@ -585,6 +585,7 @@ function App() {
           {isLoggedIn && (
             <div className="z-0">
               <PreRenderedLiveboardEmbed
+                isLiveboardStylingAndGroupingEnabled={true}
                 key={user.name}
                 ref={liveboardEmbedRef}
                 visibleActions={

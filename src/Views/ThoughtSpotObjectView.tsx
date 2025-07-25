@@ -170,6 +170,7 @@ const ThoughtSpotObjectView: React.FC<ThoughtSpotObjectViewProps> = ({
         <LiveboardEmbed
           ref={lbRef}
           isLiveboardCompactHeaderEnabled={true}
+          isLiveboardStylingAndGroupingEnabled={true}
           hiddenActions={
             user.userRole.hiddenActions
               ? user.userRole.hiddenActions
