@@ -31,7 +31,7 @@ interface ThoughtSpotObjectViewProps {
   settings: Settings;
   updateFilters: (runtimeFilters: RuntimeFilter[]) => void;
   presentMode: () => void;
-  setShowSage: (showSage: boolean) => void;
+  setShowSpotter: (showSpotter: boolean) => void;
 }
 const ThoughtSpotObjectView: React.FC<ThoughtSpotObjectViewProps> = ({
   user,
@@ -41,7 +41,7 @@ const ThoughtSpotObjectView: React.FC<ThoughtSpotObjectViewProps> = ({
   settings,
   updateFilters,
   presentMode,
-  setShowSage,
+  setShowSpotter,
 }) => {
   const [customActionPopupVisible, setCustomActionPopupVisible] =
     useState<boolean>(false);
@@ -150,7 +150,7 @@ const ThoughtSpotObjectView: React.FC<ThoughtSpotObjectViewProps> = ({
             <button
               className="w-36 bg-gray-200 hover:bg-gray-400 text-black hover:text-white font-bold py-2 px-4 rounded"
               onClick={() => {
-                setShowSage(true);
+                setShowSpotter(true);
               }}
             >
               Create a Viz
@@ -170,7 +170,6 @@ const ThoughtSpotObjectView: React.FC<ThoughtSpotObjectViewProps> = ({
         <LiveboardEmbed
           ref={lbRef}
           isLiveboardCompactHeaderEnabled={true}
-          isLiveboardStylingAndGroupingEnabled={true}
           hiddenActions={
             user.userRole.hiddenActions
               ? user.userRole.hiddenActions

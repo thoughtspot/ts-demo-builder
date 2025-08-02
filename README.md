@@ -36,7 +36,7 @@ You should see dependencies getting installed.  You may see warning about depend
 
 ### Create a .env file
 
-To demo Sage, you need to create a .env file in the root directory and add the following:
+To demo DAG capabilities, you need to create a .env file in the root directory and add the following:
 
 `REACT_APP_GPT_API_KEY=<your key>`, where `<your key>` is a valid OpenAI key.  
 

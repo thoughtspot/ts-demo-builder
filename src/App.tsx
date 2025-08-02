@@ -23,8 +23,8 @@ import {
 import {
   LiveboardEmbed,
   PreRenderedLiveboardEmbed,
-  PreRenderedSageEmbed,
-  SageEmbed,
+  PreRenderedConversationEmbed,
+  SpotterEmbed,
   useEmbedRef,
 } from "@thoughtspot/visual-embed-sdk/react";
 import RestReportsList from "./Views/RestReportsList";
@@ -32,7 +32,7 @@ import LoginPopup from "./Views/Popups/LoginPopup";
 import { createClientWithoutAuth } from "./Util/Util";
 import HomePageView from "./Views/HomePage";
 import { CSSOverrides, defaultSettings } from "./Util/Types";
-import SageView from "./Views/SageView";
+import SpotterView from "./Views/SpotterView";
 import KPIChartView from "./Views/KPIChart";
 import SubMenuDetailsView from "./Views/SubMenuDetailsView";
 import { User } from "./Settings/UserConfiguration";
@@ -44,7 +44,7 @@ import {
 import { inject } from "@vercel/analytics";
 import FirstLoginWelcome from "./Views/FirstLoginWelcome";
 import TopNav from "./Views/TopNav";
-import SimpleSageView from "./Views/ThoughtSpotEmbeds/SimpleSageView";
+import SimpleSpotterView from "./Views/ThoughtSpotEmbeds/SimpleSpotterView";
 import SimpleSearchView from "./Views/ThoughtSpotEmbeds/SimpleSearchView";
 import SimpleFullAppView from "./Views/ThoughtSpotEmbeds/FullAppView";
 import PresentMode from "./Views/Popups/PresentMode";
@@ -67,13 +67,13 @@ import { Settings } from "./Settings/SettingsConfiguration";
     - SubMenuView: The view that displays the sub menu
     - ThoughtSpotObjectView: The view that displays the ThoughtSpot object
     - RestReportsList: The view that displays the list of reports from the REST API
-    - SageView: The view that displays the Sage search bar
+    - SpotterView: The view that displays the Spotter search bar
     - HomePageView: The view that displays the home page
     - KPIChartView: The view that displays the KPI chart
     - SubMenuDetailsView: The view that displays the sub menu details
     - UserProfile: The user profile component
     - LoginPopup: The login popup component
-    - SageQuestionPrompt: The Sage question prompt component
+    - SpotterQuestionPrompt: The Spotter question prompt component
 
   The application uses several contexts to manage state:
     - TSLoginContext: A context to manage the ThoughtSpot login status
@@ -87,7 +87,7 @@ export enum PageType {
   ANALYTICSHOME,
   FAVORITES,
   MYREPORTS,
-  SIMPLESAGE,
+  SIMPLESPOTTER,
   SIMPLESEARCH,
   SIMPLEFULLAPP,
   SUBMENU,
@@ -126,38 +126,38 @@ function App() {
   // Login status for ThoughtSpot
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
 
-  // Visibility states for the settings and sage embed
+  // Visibility states for the settings and spotter embed
   const [showSettings, setShowSettings] = useState<boolean>(false);
-  const [showSage, setShowSage] = useState<boolean>(false);
+  const [showSpotter, setShowSpotter] = useState<boolean>(false);
   const [loginPopupVisible, setLoginPopupVisible] = useState<boolean>(false);
   const [presentModeVisible, setPresentModeVisible] = useState<boolean>(false);
 
-  // State for the sage prompt
-  const [sageLoaded, setSageLoaded] = useState<boolean>(false);
-  const [sagePrompt, setSagePrompt] = useState<string>("");
+  // State for the spotter prompt
+  const [spotterLoaded, setSpotterLoaded] = useState<boolean>(false);
+  const [spotterPrompt, setSpotterPrompt] = useState<string>("");
 
   // Embed refs for the ThoughtSpot pre-rendered embeds
   const liveboardEmbedRef = useEmbedRef<typeof LiveboardEmbed>();
-  const sageEmbedRef = useEmbedRef<typeof SageEmbed>();
+  const spotterEmbedRef = useEmbedRef<typeof SpotterEmbed>();
 
   const [showChat, setShowChat] = useState<boolean>(false);
   const threadRef = useRef<Thread>();
   const clearMessages = useStore((state: any) => state.clearMessages);
 
-  // Function to move the sage embed to the front or back of the page
-  const updateSageVisibility = useCallback(() => {
-    let sageEmbed: any = document.getElementById(
-      "tsEmbed-pre-render-wrapper-sageEmbed"
+  // Function to move the spotter embed to the front or back of the page
+  const updateSpotterVisibility = useCallback(() => {
+    let spotterEmbed: any = document.getElementById(
+      "tsEmbed-pre-render-wrapper-spotterEmbed"
     );
-    if (!sageEmbed) return;
-    if (showSage) {
+    if (!spotterEmbed) return;
+    if (showSpotter) {
       setTimeout(() => {
-        sageEmbed.style.zIndex = 20;
+        spotterEmbed.style.zIndex = 20;
       }, 500);
     } else {
-      sageEmbed.style.zIndex = 0;
+      spotterEmbed.style.zIndex = 0;
     }
-  }, [showSage]);
+  }, [showSpotter]);
 
   const startNewThread = useCallback(() => {
     if (!isLoggedIn) return;
@@ -185,7 +185,7 @@ function App() {
     startNewThread();
   }, [showChat, startNewThread]);
   useEffect(() => {
-    setSageLoaded(false);
+    setSpotterLoaded(false);
     startNewThread();
   }, [selectedPage?.subMenu, startNewThread]);
 
@@ -215,16 +215,16 @@ function App() {
     }
   }, [user, liveboardEmbedRef, setSelectedPage]);
 
-  // Update visiblity and listen for pin event when sage is selected
+  // Update visiblity and listen for pin event when spotter is selected
   useEffect(() => {
-    let sageEmbed: any = document.getElementById(
-      "tsEmbed-pre-render-wrapper-sageEmbed"
+    let spotterEmbed: any = document.getElementById(
+      "tsEmbed-pre-render-wrapper-spotterEmbed"
     );
-    if (!sageEmbed) return;
-    updateSageVisibility();
-    if (sageEmbed.__tsEmbed) {
+    if (!spotterEmbed) return;
+    updateSpotterVisibility();
+    if (spotterEmbed.__tsEmbed) {
       // Listen for the pin event and refresh the liveboard embed
-      sageEmbed.__tsEmbed.on(EmbedEvent.Pin, (data: any) => {
+      spotterEmbed.__tsEmbed.on(EmbedEvent.Pin, (data: any) => {
         let liveboardId = data.data.liveboardId;
         let liveboardEmbed: any = document.getElementById(
           "tsEmbed-pre-render-wrapper-liveboardEmbed"
@@ -233,33 +233,35 @@ function App() {
         liveboardEmbed.__tsEmbed.navigateToLiveboard(liveboardId);
       });
     }
-  }, [showSage, updateSageVisibility]);
+  }, [showSpotter, updateSpotterVisibility]);
 
-  // On page change, ensure sage visibility is correct and update the pre-rendered embed
+  // On page change, ensure spotter visibility is correct and update the pre-rendered embed
   useEffect(() => {
-    updateSageVisibility();
-    let sageEmbed: any = document.getElementById(
-      "tsEmbed-pre-render-wrapper-sageEmbed"
+    updateSpotterVisibility();
+    let spotterEmbed: any = document.getElementById(
+      "tsEmbed-pre-render-wrapper-spotterEmbed"
     );
-    if (!sageEmbed) return;
+    if (!spotterEmbed) return;
     setTimeout(() => {
-      sageEmbed.__tsEmbed.syncPreRenderStyle();
+      spotterEmbed.__tsEmbed.syncPreRenderStyle();
     }, 500);
-  }, [selectedPage, updateSageVisibility]);
+  }, [selectedPage, updateSpotterVisibility]);
 
-  // On prompt change, update the sage embed
+  // On prompt change, update the spotter embed
   useEffect(() => {
-    updateSageVisibility();
-    if (sagePrompt !== "") {
-      setShowSage(true);
+    updateSpotterVisibility();
+    if (spotterPrompt !== "") {
+      setShowSpotter(true);
     }
-    if (sagePrompt !== "" && showSage && sageEmbedRef.current) {
-      sageEmbedRef.current.trigger(HostEvent.UpdateSageQuery, {
-        queryString: sagePrompt,
-        executeSearch: true,
+    if (spotterPrompt !== "" && showSpotter && spotterEmbedRef.current) {
+      console.log("editing last prompt", spotterPrompt);
+      /*  TODO: This host event is not yet supported in the SDK.  Need to add this when it is supported.
+      spotterEmbedRef.current.trigger(HostEvent.EditLastPrompt, {
+        queryString: spotterPrompt,
       });
+      */
     }
-  }, [sagePrompt, updateSageVisibility, showSage, sageEmbedRef]);
+  }, [spotterPrompt, updateSpotterVisibility, showSpotter, spotterEmbedRef]);
 
   // Get the settings from the URL path if it exists
   useEffect(() => {
@@ -338,7 +340,7 @@ function App() {
 
   // Trigger the update runtime filters event on the liveboard embed
   const updateFilters = (runtimeFilters: RuntimeFilter[]) => {
-    if (sageEmbedRef.current) {
+    if (spotterEmbedRef.current) {
       // have to do it on the __tsembed object because the ref is broken for now.
       var element: any = document.querySelector(
         "#tsEmbed-pre-render-wrapper-liveboardEmbed"
@@ -375,17 +377,17 @@ function App() {
               setSelectedPage={setSelectedPage}
               setSettings={setSettings}
               setLoginPopupVisible={setLoginPopupVisible}
-              setShowSage={setShowSage}
+              setShowSpotter={setShowSpotter}
             />
-            {/* Sage Popup */}
-            {showSage && (
-              <SageView
-                setShowSage={setShowSage}
-                setSagePrompt={setSagePrompt}
+            {/* Spotter Popup */}
+            {showSpotter && (
+              <SpotterView
+                setShowSpotter={setShowSpotter}
+                setSpotterPrompt={setSpotterPrompt}
                 selectedPage={selectedPage}
-                sagePrompt={sagePrompt}
-                sageLoaded={sageLoaded}
-                setSageLoaded={setSageLoaded}
+                spotterPrompt={spotterPrompt}
+                spotterLoaded={spotterLoaded}
+                setSpotterLoaded={setSpotterLoaded}
               />
             )}
             <div
@@ -433,8 +435,8 @@ function App() {
                   selectedPage.type === PageType.ANALYTICSHOME &&
                   isLoggedIn && (
                     <HomePageView
-                      setSagePrompt={setSagePrompt}
-                      setShowSage={setShowSage}
+                      setSpotterPrompt={setSpotterPrompt}
+                      setShowSpotter={setShowSpotter}
                       setSelectedPage={setSelectedPage}
                       setThoughtSpotObject={setSelectedThoughtSpotObject}
                     />
@@ -474,7 +476,7 @@ function App() {
                       <div
                         className="absolute flex flex-col"
                         style={
-                          selectedPage.type !== PageType.SIMPLESAGE &&
+                          selectedPage.type !== PageType.SIMPLESPOTTER &&
                           selectedPage.type !== PageType.SIMPLESEARCH &&
                           selectedPage.type !== PageType.SIMPLEFULLAPP
                             ? {
@@ -490,7 +492,7 @@ function App() {
                         {selectedThoughtSpotObject && isLoggedIn && (
                           <ThoughtSpotObjectView
                             user={user}
-                            setShowSage={setShowSage}
+                            setShowSpotter={setShowSpotter}
                             updateFilters={updateFilters}
                             presentMode={presentMode}
                             settings={settings}
@@ -504,8 +506,10 @@ function App() {
                           />
                         )}
                         {selectedPage &&
-                          selectedPage.type === PageType.SIMPLESAGE && (
-                            <SimpleSageView simpleSage={settings.simpleSage} />
+                          selectedPage.type === PageType.SIMPLESPOTTER && (
+                            <SimpleSpotterView
+                              simpleSpotter={settings.simpleSpotter}
+                            />
                           )}
                         {selectedPage &&
                           selectedPage.type === PageType.SIMPLESEARCH && (
@@ -531,8 +535,8 @@ function App() {
                             >
                               <KPIChartView
                                 subMenu={selectedPage?.subMenu}
-                                setSagePrompt={setSagePrompt}
-                                setShowSage={setShowSage}
+                                setSpotterPrompt={setSpotterPrompt}
+                                setShowSpotter={setShowSpotter}
                                 setSelectedPage={setSelectedPage}
                                 setThoughtSpotObject={
                                   setSelectedThoughtSpotObject
@@ -579,13 +583,12 @@ function App() {
           </div>
 
           {/*
-            Generate the pre-rendered embeds for the liveboard and sage embeds
+            Generate the pre-rendered embeds for the liveboard and spotter embeds
             These are hidden and only used to pre-render the embeds before they are shown 
           */}
           {isLoggedIn && (
             <div className="z-0">
               <PreRenderedLiveboardEmbed
-                isLiveboardStylingAndGroupingEnabled={true}
                 key={user.name}
                 ref={liveboardEmbedRef}
                 visibleActions={
@@ -605,7 +608,7 @@ function App() {
                 frameParams={{width:'100%',height:'100%'}}
             /> */}
 
-              <PreRenderedSageEmbed
+              <PreRenderedConversationEmbed
                 visibleActions={[
                   Action.Save,
                   Action.Pin,
@@ -616,17 +619,16 @@ function App() {
                   Action.Download,
                   Action.AddFilter,
                 ]}
-                hideSageAnswerHeader={true}
-                hideWorksheetSelector={true}
-                dataSource={
+                disableSourceSelection={true}
+                worksheetId={
                   selectedPage?.subMenu
                     ? selectedPage.subMenu.worksheet
                     : settings.subMenus[0]
                     ? settings.subMenus[0].worksheet
                     : ""
                 }
-                ref={sageEmbedRef}
-                preRenderId="sageEmbed"
+                ref={spotterEmbedRef}
+                preRenderId="spotterEmbed"
                 frameParams={{ width: "100%", height: "100%" }}
               />
             </div>

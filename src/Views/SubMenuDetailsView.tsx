@@ -2,14 +2,14 @@ import { useContext, useEffect, useState } from "react";
 import { SubMenu } from "../Settings/SubMenuConfiguration";
 import { SettingsContext } from "../App";
 import { createClientWithoutAuth } from "../Util/Util";
-import { SageEmbed, SearchEmbed } from "@thoughtspot/visual-embed-sdk/react";
+import { SpotterEmbed, SearchEmbed } from "@thoughtspot/visual-embed-sdk/react";
 
 interface SubMenuDetailsViewProps {
   subMenu: SubMenu;
 }
 enum SearchType {
   NONE,
-  SAGE,
+  SPOTTER,
   SEARCH,
   GUIDED,
 }
@@ -58,10 +58,10 @@ const SubMenuDetailsView: React.FC<SubMenuDetailsViewProps> = ({ subMenu }) => {
 
           <div className="flex flex-row space-x-4 my-4">
             <button
-              onClick={() => setSelectedSearchType(SearchType.SAGE)}
+              onClick={() => setSelectedSearchType(SearchType.SPOTTER)}
               className="bg-gray-200 hover:bg-gray-400 text-black hover:text-white font-bold py-2 px-4 rounded"
             >
-              Sage
+              Spotter
             </button>
             <button
               onClick={() => setSelectedSearchType(SearchType.SEARCH)}
@@ -77,12 +77,12 @@ const SubMenuDetailsView: React.FC<SubMenuDetailsViewProps> = ({ subMenu }) => {
               height: selectedSearchType === SearchType.NONE ? "50px" : "700px",
             }}
           >
-            {selectedSearchType === SearchType.SAGE && (
+            {selectedSearchType === SearchType.SPOTTER && (
               <div className="flex flex-col mt-4 h-full">
-                <div className="font-bold text-lg">Sage</div>
-                <div className="text-gray-400">Ask Sage a question</div>
-                <SageEmbed
-                  dataSource={subMenu.worksheet}
+                <div className="font-bold text-lg">Spotter</div>
+                <div className="text-gray-400">Ask Spotter a question</div>
+                <SpotterEmbed
+                  worksheetId={subMenu.worksheet}
                   frameParams={{ width: "100%", height: "650px" }}
                 />
               </div>

@@ -22,15 +22,15 @@ import { KPIType } from "../Settings/KPIConfiguration";
 
 export interface KPIChartProps {
   subMenu: SubMenu;
-  setSagePrompt: (prompt: string) => void;
-  setShowSage: (show: boolean) => void;
+  setSpotterPrompt: (prompt: string) => void;
+  setShowSpotter: (show: boolean) => void;
   setThoughtSpotObject: (thoughtSpotObject: ThoughtSpotObject) => void;
   setSelectedPage: (page: Page) => void;
 }
 const KPIChartView: React.FC<KPIChartProps> = ({
   subMenu,
-  setSagePrompt,
-  setShowSage,
+  setSpotterPrompt,
+  setShowSpotter,
   setThoughtSpotObject,
   setSelectedPage,
 }) => {
@@ -195,11 +195,11 @@ const KPIChartView: React.FC<KPIChartProps> = ({
           </div>
           <div className="text-lg font-bold mt-4 mb-2">Common Questions</div>
           <div className="flex flex-col space-y-2">
-            {subMenu.sage.sampleQuestions.map((question, index) => (
+            {(subMenu.spotter?.sampleQuestions ?? []).map((question, index) => (
               <div
                 onClick={() => {
-                  setSagePrompt(question);
-                  setShowSage(true);
+                  setSpotterPrompt(question);
+                  setShowSpotter(true);
                 }}
                 className="flex flex-row space-x-2 hover:cursor-pointer hover:font-bold hover:text-blue-400"
               >

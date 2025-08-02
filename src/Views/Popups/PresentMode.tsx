@@ -97,7 +97,6 @@ const PresentMode: React.FC<PresentModeProps> = ({
           {loaded && (
             <LiveboardEmbed
               ref={embedRef}
-              isLiveboardStylingAndGroupingEnabled={true}
               liveboardId={liveboardId}
               frameParams={{ width: "100%", height: "100%" }}
               onLoad={onLoad}

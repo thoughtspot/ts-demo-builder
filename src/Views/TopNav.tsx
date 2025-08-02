@@ -11,14 +11,14 @@ interface TopNavProps {
   setSelectedPage: (page: Page) => void;
   setSettings: (settings: any) => void;
   setLoginPopupVisible: (visible: boolean) => void;
-  setShowSage: (show: boolean) => void;
+  setShowSpotter: (show: boolean) => void;
 }
 const TopNav: React.FC<TopNavProps> = ({
   user,
   setUser,
   showSettings,
   setShowSettings,
-  setShowSage,
+  setShowSpotter,
   setSettings,
   setLoginPopupVisible,
   setSelectedPage,
@@ -56,7 +56,7 @@ const TopNav: React.FC<TopNavProps> = ({
               </div>
             </div>
             <div className="flex flex-row space-x-4">
-              {/* <button onClick={()=>setShowSage(true)} style={{color:settings.style.headerTextColor}} className="flex flex-row items-center p-2 rounded-lg hover:bg-gray-200"> Ask Sage </button> */}
+              {/* <button onClick={()=>setShowSpotter(true)} style={{color:settings.style.headerTextColor}} className="flex flex-row items-center p-2 rounded-lg hover:bg-gray-200"> Ask Spotter </button> */}
               <UserProfile setUser={setUser} user={user} />
             </div>
             {showSettings && (

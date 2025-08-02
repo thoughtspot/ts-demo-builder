@@ -1,8 +1,5 @@
 /*
-
 Primary Settings Menu Component
-
-
 */
 
 import { useState, useEffect } from "react";
@@ -23,7 +20,9 @@ import {
   TextInput,
 } from "./Inputs/InputMenus";
 import GitSettings from "./Git/GitSettings";
-import SimpleSageConfig, { SimpleSage } from "./StandardMenus/SimpleSageConfig";
+import SimpleSpotterConfig, {
+  SimpleSpotter,
+} from "./StandardMenus/SimpleSpotterConfig";
 import SimpleSearchConfig, {
   SimpleSearch,
 } from "./StandardMenus/SimpleSearchConfig";
@@ -45,7 +44,7 @@ export interface Settings {
   homePage: HomePage;
   myReports: MyReports;
   favorites: Favorites;
-  simpleSage: SimpleSage;
+  simpleSpotter: SimpleSpotter;
   simpleSearch: SimpleSearch;
   simpleFullApp: SimpleFullApp;
   users: User[];
@@ -75,7 +74,9 @@ const SettingsConfiguration: React.FC<SettingsProps> = ({
   const [homePage, setHomePage] = useState<HomePage>(settings.homePage);
   const [myReports, setMyReports] = useState<MyReports>(settings.myReports);
   const [favorites, setFavorites] = useState<Favorites>(settings.favorites);
-  const [simpleSage, setSimpleSage] = useState<SimpleSage>(settings.simpleSage);
+  const [simpleSpotter, setSimpleSpotter] = useState<SimpleSpotter>(
+    settings.simpleSpotter
+  );
   const [simpleSearch, setSimpleSearch] = useState<SimpleSearch>(
     settings.simpleSearch
   );
@@ -90,9 +91,9 @@ const SettingsConfiguration: React.FC<SettingsProps> = ({
 
   /* Set default values if settings are not provided, or are out of date */
   useEffect(() => {
-    if (!simpleSage || simpleSage === undefined) {
-      console.log("setting simple sage");
-      setSimpleSage({
+    if (!simpleSpotter || simpleSpotter === undefined) {
+      console.log("setting simple spotter");
+      setSimpleSpotter({
         enabled: false,
         worksheet: "",
         name: "Natural Language",
@@ -118,11 +119,11 @@ const SettingsConfiguration: React.FC<SettingsProps> = ({
       setUsers([]);
     }
   }, [
-    simpleSage,
+    simpleSpotter,
     simpleSearch,
     simpleFullApp,
     users,
-    setSimpleSage,
+    setSimpleSpotter,
     setSimpleSearch,
     setSimpleFullApp,
     setUsers,
@@ -160,7 +161,7 @@ const SettingsConfiguration: React.FC<SettingsProps> = ({
       favorites,
       users,
       simpleSearch,
-      simpleSage,
+      simpleSpotter,
       simpleFullApp,
       otherSettings,
     });
@@ -346,7 +347,7 @@ const SettingsConfiguration: React.FC<SettingsProps> = ({
                         color: settings.style.headerColor,
                         type: KPIType.LINE,
                       },
-                      sage: { askSage: true, sampleQuestions: [""] },
+                      spotter: { askSpotter: true, sampleQuestions: [""] },
                     },
                   ])
                 }
@@ -365,9 +366,9 @@ const SettingsConfiguration: React.FC<SettingsProps> = ({
                 myReports={myReports}
                 setMyReports={setMyReports}
               />
-              <SimpleSageConfig
-                simpleSage={simpleSage}
-                setSimpleSage={setSimpleSage}
+              <SimpleSpotterConfig
+                simpleSpotter={simpleSpotter}
+                setSimpleSpotter={setSimpleSpotter}
               />
               <SimpleSearchConfig
                 simpleSearch={simpleSearch}

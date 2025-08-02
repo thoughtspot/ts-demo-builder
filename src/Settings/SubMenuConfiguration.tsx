@@ -4,7 +4,7 @@ import ThoughtSpotObjectConfiguration, {
   ThoughtSpotObjectType,
 } from "./ThoughtSpotObjectConfiguration";
 import IconSelection from "./Inputs/IconSelection";
-import SageConfiguration, { Sage } from "./SageConfiguration";
+import SpotterConfiguration, { Spotter } from "./SpotterConfiguration";
 import FiltersConfiguration, { Filter } from "./FiltersConfiguration";
 import { HiMagnifyingGlass } from "react-icons/hi2";
 import ThoughtSpotObjectSearch from "./Inputs/ThoughtSpotObjectSearch";
@@ -27,7 +27,7 @@ export interface SubMenu {
   worksheet: string;
   filters: Filter[];
   kpiChart: KPIChart;
-  sage: Sage;
+  spotter: Spotter;
   userPermissions: UserPermission[];
 }
 
@@ -155,9 +155,9 @@ const SubMenuConfiguration: React.FC<SubMenuConfigurationProps> = ({
                 </div>
               </div>
               <div className="flex flex-col mt-8 border-t-2 p-4">
-                <SageConfiguration
-                  sage={subMenu.sage}
-                  setSage={(sage) => setSubMenu({ ...subMenu, sage })}
+                <SpotterConfiguration
+                  spotter={subMenu.spotter}
+                  setSpotter={(spotter) => setSubMenu({ ...subMenu, spotter })}
                 />
               </div>
               <div className="flex flex-col mt-8 border-t-2 p-4">
