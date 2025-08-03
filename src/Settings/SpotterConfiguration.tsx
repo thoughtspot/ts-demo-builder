@@ -14,6 +14,11 @@ const SpotterConfiguration: React.FC<SpotterConfigurationProps> = ({
   spotter,
   setSpotter,
 }) => {
+  // Safety check to prevent undefined errors
+  if (!spotter) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <div className="flex flex-col space-y-2 rounded-lg bg-white">
       <div className="flex flex-row space-x-4 w-full">
@@ -44,7 +49,7 @@ const SpotterConfiguration: React.FC<SpotterConfigurationProps> = ({
               <div className="flex flex-col space-y-2 mb-2">
                 {spotter.askSpotter &&
                   spotter.sampleQuestions.map((question, index) => (
-                    <div className="flex w-full flex-row">
+                    <div key={index} className="flex w-full flex-row">
                       <TextInput
                         label={"Sample Question " + (index + 1)}
                         value={question}
