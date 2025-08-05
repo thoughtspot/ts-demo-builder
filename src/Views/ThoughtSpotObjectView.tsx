@@ -186,6 +186,7 @@ const ThoughtSpotObjectView: React.FC<ThoughtSpotObjectViewProps> = ({
             setCustomActionPopupVisible(true);
           }}
           preRenderId="liveboardEmbed"
+          isLiveboardStylingAndGroupingEnabled={true}
           liveboardId={thoughtSpotObject.uuid}
           frameParams={{ width: "100%", height: "100%" }}
         />
